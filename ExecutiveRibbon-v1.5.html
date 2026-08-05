@@ -1,0 +1,416 @@
+﻿<!-- =========================================================
+  ExecutiveRibbon-v1.html
+  PnP Modern Search Results v4.22.0 — Custom Layout
+  Target: Executive AI Playbook
+
+
+  IMPORTANT
+  - Map Path to the SharePoint list item Display Form URL.
+  - Title and Open launch in a new tab to preserve search sort/filter state.
+  - Required selected properties:
+    Title, Path, PreviewUrl, SCUsageNotes, SCMissionCategory,
+    SCResponseFormat, Created
+========================================================= -->
+
+
+<content id="data-content">
+  <style>
+    .executive-ribbon {
+      --er-blue: #0078a8;
+      --er-blue-dark: #005a7a;
+      --er-blue-soft: #eef6ff;
+      --er-green: #008272;
+      --er-border: #eeeeee;
+      --er-text: #242424;
+      --er-muted: #616161;
+      --er-surface: #ffffff;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      color: var(--er-text);
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+
+    .executive-ribbon__summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 0 0 8px;
+      padding: 0 2px 8px;
+      color: var(--er-muted);
+      font-size: 13px;
+      border-bottom: 1px solid var(--er-border);
+    }
+
+
+    .executive-ribbon__list {
+      display: grid;
+      gap: 0;
+    }
+
+
+    .executive-ribbon__item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: start;
+      padding: 14px 12px;
+      background: var(--er-surface);
+      border-bottom: 1px solid var(--er-border);
+      transition: background-color 120ms ease, border-color 120ms ease;
+    }
+
+
+    .executive-ribbon__item:hover,
+    .executive-ribbon__item:focus-within {
+      background: #fafcff;
+      border-bottom-color: #d6e7f7;
+    }
+
+
+    .executive-ribbon__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      margin-top: 1px;
+      color: var(--er-green);
+      background: #eef8f6;
+      border-radius: 4px;
+    }
+
+
+    .executive-ribbon__main {
+      min-width: 0;
+    }
+
+
+    .executive-ribbon__title {
+      display: inline-block;
+      max-width: 100%;
+      margin: 0 0 6px;
+      overflow: hidden;
+      color: var(--er-blue);
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.3;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+
+    .executive-ribbon__title:hover,
+    .executive-ribbon__title:focus {
+      color: var(--er-blue-dark);
+    }
+
+
+    .executive-ribbon__usage {
+      display: -webkit-box;
+      margin: 0 0 10px;
+      overflow: hidden;
+      color: var(--er-text);
+      font-size: 14px;
+      line-height: 1.45;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+
+    .executive-ribbon__usage--empty {
+      color: var(--er-muted);
+      font-style: italic;
+    }
+
+
+    .executive-ribbon__meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+
+    .executive-ribbon__chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 1px 8px;
+      color: #0f3b68;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 18px;
+      background: var(--er-blue-soft);
+      border: 1px solid #d6e7f7;
+      border-radius: 999px;
+    }
+
+
+    .executive-ribbon__chip-label {
+      margin-right: 4px;
+      color: var(--er-muted);
+      font-weight: 400;
+    }
+
+
+    .executive-ribbon__created {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: 2px;
+      color: var(--er-muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+
+    .executive-ribbon__actions {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      align-self: center;
+      gap: 8px;
+    }
+
+
+    .executive-ribbon__preview {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      min-height: 32px;
+      padding: 4px 8px;
+      color: var(--er-blue-dark);
+      font-size: 13px;
+      font-weight: 600;
+      background: transparent;
+      border: 0;
+      border-radius: 4px;
+    }
+
+
+    .executive-ribbon__preview:hover,
+    .executive-ribbon__preview:focus-within {
+      background: var(--er-blue-soft);
+    }
+
+
+    .executive-ribbon__open {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 32px;
+      padding: 5px 12px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 20px;
+      text-decoration: none;
+      background: var(--er-blue);
+      border: 1px solid var(--er-blue);
+      border-radius: 4px;
+    }
+
+
+    .executive-ribbon__open:hover,
+    .executive-ribbon__open:focus {
+      color: #ffffff;
+      text-decoration: none;
+      background: var(--er-blue-dark);
+      border-color: var(--er-blue-dark);
+    }
+
+
+    .executive-ribbon__empty {
+      padding: 28px;
+      color: var(--er-muted);
+      text-align: center;
+      background: #fafafa;
+      border: 1px dashed #d1d1d1;
+      border-radius: 4px;
+    }
+
+
+    @media (max-width: 760px) {
+      .executive-ribbon__item {
+        grid-template-columns: 30px minmax(0, 1fr);
+      }
+
+
+      .executive-ribbon__actions {
+        grid-column: 2;
+        justify-content: flex-start;
+      }
+
+
+      .executive-ribbon__title {
+        white-space: normal;
+      }
+    }
+  </style>
+
+
+  <div class="executive-ribbon">
+    {{#if @root.properties.showSelectedFilters}}
+      <pnp-selectedfilters
+        data-filters="{{JSONstringify filters.selectedFilters 2}}"
+        data-filters-configuration="{{JSONstringify filters.filtersConfiguration 2}}"
+        data-instance-id="{{filters.instanceId}}"
+        data-operator="{{filters.filterOperator}}"
+        data-theme-variant="{{JSONstringify @root.theme}}">
+      </pnp-selectedfilters>
+    {{/if}}
+
+
+    <div class="executive-ribbon__summary">
+      {{#if @root.properties.showResultsCount}}
+        <span>{{getCountMessage @root.data.totalItemsCount @root.inputQueryText}}</span>
+      {{/if}}
+
+
+      {{#if @root.properties.showSort}}
+        <pnp-sortfield
+          data-fields="{{JSONstringify @root.properties.sorting.fields}}"
+          data-selected-field="{{sort.selectedSortFieldName}}"
+          data-selected-direction="{{sort.selectedSortDirection}}"
+          data-theme-variant="{{JSONstringify @root.theme}}">
+        </pnp-sortfield>
+      {{/if}}
+    </div>
+
+
+    {{#if data.items}}
+      <div class="executive-ribbon__list">
+        {{#each data.items as |item|}}
+          <article class="executive-ribbon__item">
+            <div class="executive-ribbon__icon" aria-hidden="true">
+              <pnp-icon data-name="Page"></pnp-icon>
+            </div>
+
+
+            <div class="executive-ribbon__main">
+              <a
+                class="executive-ribbon__title"
+                href="{{item.Path}}"
+                target="_blank"
+                data-interception="off"
+                rel="noopener noreferrer"
+                title="Open {{item.Title}} in a new tab">
+                {{item.Title}}
+              </a>
+
+
+              {{#if item.SCUsageNotes}}
+                <div class="executive-ribbon__usage">
+                  {{{item.SCUsageNotes}}}
+                </div>
+              {{else}}
+                <div class="executive-ribbon__usage executive-ribbon__usage--empty">
+                  No usage notes provided.
+                </div>
+              {{/if}}
+
+
+              <div class="executive-ribbon__meta">
+                {{#if item.SCMissionCategory}}
+                  <span class="executive-ribbon__chip">
+                    <span class="executive-ribbon__chip-label">Mission</span>
+                    {{item.SCMissionCategory}}
+                  </span>
+                {{/if}}
+
+
+                {{#if item.SCResponseFormat}}
+                  <span class="executive-ribbon__chip">
+                    <span class="executive-ribbon__chip-label">Response</span>
+                    {{item.SCResponseFormat}}
+                  </span>
+                {{/if}}
+
+
+                {{#if item.Created}}
+                  <span class="executive-ribbon__created">
+                    <pnp-icon data-name="Calendar"></pnp-icon>
+                    Created {{getDate item.Created "MM/DD/YYYY"}}
+                  </span>
+                {{/if}}
+              </div>
+            </div>
+
+
+            <div class="executive-ribbon__actions">
+              {{#if item.PreviewUrl}}
+                <span class="executive-ribbon__preview">
+                  <pnp-filepreview
+                    data-preview-url="{{item.PreviewUrl}}"
+                    data-item-url="{{item.Path}}"
+                    data-theme-variant="{{JSONstringify @root.theme}}">
+                  </pnp-filepreview>
+                  <span>Preview</span>
+                </span>
+              {{/if}}
+
+
+              <a
+                class="executive-ribbon__open"
+                href="{{item.Path}}"
+                target="_blank"
+                data-interception="off"
+                rel="noopener noreferrer"
+                title="Open {{item.Title}} in a new tab">
+                <span>Open</span>
+                <pnp-icon data-name="OpenInNewWindow"></pnp-icon>
+              </a>
+            </div>
+          </article>
+        {{/each}}
+      </div>
+
+
+      {{#if @root.properties.showPagination}}
+        <pnp-pagination
+          data-total-items="{{@root.data.totalItemsCount}}"
+          data-hide-first-last-pages="{{@root.properties.hideFirstLastPages}}"
+          data-hide-disabled="{{@root.properties.hideDisabled}}"
+          data-hide-navigation="{{@root.properties.hideNavigation}}"
+          data-range="{{@root.properties.pagingRange}}"
+          data-items-count-per-page="{{@root.properties.itemsCountPerPage}}"
+          data-current-page-number="{{@root.paging.currentPageNumber}}">
+        </pnp-pagination>
+      {{/if}}
+    {{else}}
+      <div class="executive-ribbon__empty">
+        No Executive AI Playbook results were found.
+      </div>
+    {{/if}}
+  </div>
+</content>
+
+
+<!-- =========================================================
+  SLOT / PROPERTY CHECKLIST
+  Title              -> Title
+  Path               -> list item Display Form URL
+  PreviewUrl         -> PreviewUrl
+  UsageNotes         -> SCUsageNotes
+  MissionCategory    -> SCMissionCategory
+  ResponseFormat     -> SCResponseFormat
+  Created            -> Created
+
+
+  TEST ORDER
+  1. Confirm Title and Open launch a new tab.
+  2. Confirm the sorted/filtered results remain unchanged in the original tab.
+  3. Confirm neither action downloads a file.
+  4. Confirm Preview still opens through pnp-filepreview.
+  5. Verify Mission, Response, and Created values.
+  6. Test at approximately 1200px and tablet width.
+========================================================= -->

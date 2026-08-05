@@ -1,0 +1,429 @@
+﻿<!-- =========================================================
+  ExecutiveRibbon-v1.html
+  PnP Modern Search Results v4.22.0 — Custom Layout
+  Target: Executive AI Playbook
+  IMPORTANT:
+  - Map Path to the SharePoint list item Display Form URL.
+  - Do not map Path to a document/download URL.
+  - Required selected properties:
+    Title, Path, PreviewUrl, SCUsageNotes, SCMissionCategory,
+    SCResponseFormat, Tags, Created, Author
+========================================================= -->
+
+
+<content id="data-content">
+
+
+  <!-- =========================
+       SECTION 1 — STYLES
+  ========================== -->
+  <style>
+    .executive-ribbon {
+      --er-blue: #0f6cbd;
+      --er-blue-dark: #0b4a7d;
+      --er-blue-soft: #eff6fc;
+      --er-border: #d1d1d1;
+      --er-text: #242424;
+      --er-muted: #616161;
+      --er-surface: #ffffff;
+      --er-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      color: var(--er-text);
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+
+    .executive-ribbon__summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 0 0 12px;
+      color: var(--er-muted);
+      font-size: 13px;
+    }
+
+
+    .executive-ribbon__list {
+      display: grid;
+      gap: 12px;
+    }
+
+
+    .executive-ribbon__item {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      padding: 16px 16px 14px 20px;
+      overflow: hidden;
+      background: var(--er-surface);
+      border: 1px solid var(--er-border);
+      border-radius: 8px;
+      box-shadow: var(--er-shadow);
+      transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+    }
+
+
+    .executive-ribbon__item::before {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 5px;
+      content: "";
+      background: var(--er-blue);
+    }
+
+
+    .executive-ribbon__item:hover,
+    .executive-ribbon__item:focus-within {
+      border-color: var(--er-blue);
+      box-shadow: 0 4px 14px rgba(15, 108, 189, 0.16);
+      transform: translateY(-1px);
+    }
+
+
+    .executive-ribbon__main {
+      min-width: 0;
+    }
+
+
+    .executive-ribbon__title {
+      display: inline-block;
+      max-width: 100%;
+      margin: 0 0 7px;
+      overflow: hidden;
+      color: var(--er-blue-dark);
+      font-size: 19px;
+      font-weight: 650;
+      line-height: 1.25;
+      text-decoration: none;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+
+    .executive-ribbon__title:hover,
+    .executive-ribbon__title:focus {
+      color: var(--er-blue);
+      text-decoration: underline;
+    }
+
+
+    .executive-ribbon__usage {
+      display: -webkit-box;
+      margin: 0 0 12px;
+      overflow: hidden;
+      color: var(--er-text);
+      font-size: 14px;
+      line-height: 1.45;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+
+    .executive-ribbon__usage--empty {
+      color: var(--er-muted);
+      font-style: italic;
+    }
+
+
+    .executive-ribbon__meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+
+    .executive-ribbon__chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 2px 9px;
+      color: #0b4a7d;
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 18px;
+      background: var(--er-blue-soft);
+      border: 1px solid #b4d6f5;
+      border-radius: 999px;
+    }
+
+
+    .executive-ribbon__chip--tag {
+      color: #424242;
+      background: #f5f5f5;
+      border-color: #e0e0e0;
+    }
+
+
+    .executive-ribbon__created {
+      margin-left: 2px;
+      color: var(--er-muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+
+    .executive-ribbon__actions {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      align-self: center;
+      gap: 8px;
+    }
+
+
+    .executive-ribbon__action,
+    .executive-ribbon__open {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 6px 12px;
+      color: var(--er-blue-dark);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 20px;
+      text-decoration: none;
+      background: #ffffff;
+      border: 1px solid var(--er-blue);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+
+    .executive-ribbon__open {
+      color: #ffffff;
+      background: var(--er-blue);
+    }
+
+
+    .executive-ribbon__action:hover,
+    .executive-ribbon__action:focus,
+    .executive-ribbon__open:hover,
+    .executive-ribbon__open:focus {
+      filter: brightness(0.94);
+      text-decoration: none;
+    }
+
+
+    .executive-ribbon__empty {
+      padding: 28px;
+      color: var(--er-muted);
+      text-align: center;
+      background: #fafafa;
+      border: 1px dashed var(--er-border);
+      border-radius: 8px;
+    }
+
+
+    @media (max-width: 760px) {
+      .executive-ribbon__item {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+
+      .executive-ribbon__actions {
+        justify-content: flex-start;
+      }
+
+
+      .executive-ribbon__title {
+        white-space: normal;
+      }
+    }
+  </style>
+
+
+  <!-- =========================
+       SECTION 2 — RESULTS HEADER
+  ========================== -->
+  <div class="executive-ribbon">
+
+
+    {{#if @root.properties.showSelectedFilters}}
+      <pnp-selectedfilters
+        data-filters="{{JSONstringify filters.selectedFilters 2}}"
+        data-filters-configuration="{{JSONstringify filters.filtersConfiguration 2}}"
+        data-instance-id="{{filters.instanceId}}"
+        data-operator="{{filters.filterOperator}}"
+        data-theme-variant="{{JSONstringify @root.theme}}">
+      </pnp-selectedfilters>
+    {{/if}}
+
+
+    <div class="executive-ribbon__summary">
+      {{#if @root.properties.showResultsCount}}
+        <span>{{getCountMessage @root.data.totalItemsCount @root.inputQueryText}}</span>
+      {{/if}}
+
+
+      {{#if @root.properties.showSort}}
+        <pnp-sortfield
+          data-fields="{{JSONstringify @root.properties.sorting.fields}}"
+          data-selected-field="{{sort.selectedSortFieldName}}"
+          data-selected-direction="{{sort.selectedSortDirection}}"
+          data-theme-variant="{{JSONstringify @root.theme}}">
+        </pnp-sortfield>
+      {{/if}}
+    </div>
+
+
+    <!-- =========================
+         SECTION 3 — EXECUTIVE RIBBONS
+    ========================== -->
+    {{#if data.items}}
+      <div class="executive-ribbon__list">
+
+
+        {{#each data.items as |item|}}
+          <article class="executive-ribbon__item">
+
+
+            <div class="executive-ribbon__main">
+
+
+              <!-- Path must resolve to the list item's Display Form URL. -->
+              <a
+                class="executive-ribbon__title"
+                href="{{item.Path}}"
+                title="Open {{item.Title}}">
+                {{item.Title}}
+              </a>
+
+
+              {{#if item.SCUsageNotes}}
+                <div class="executive-ribbon__usage">
+                  {{{item.SCUsageNotes}}}
+                </div>
+              {{else}}
+                <div class="executive-ribbon__usage executive-ribbon__usage--empty">
+                  No usage notes provided.
+                </div>
+              {{/if}}
+
+
+              <div class="executive-ribbon__meta">
+
+
+                {{#if item.SCMissionCategory}}
+                  <span class="executive-ribbon__chip">
+                    Mission: {{item.SCMissionCategory}}
+                  </span>
+                {{/if}}
+
+
+                {{#if item.SCResponseFormat}}
+                  <span class="executive-ribbon__chip">
+                    Response: {{item.SCResponseFormat}}
+                  </span>
+                {{/if}}
+
+
+                {{#if item.Tags}}
+                  <span class="executive-ribbon__chip executive-ribbon__chip--tag">
+                    {{item.Tags}}
+                  </span>
+                {{/if}}
+
+
+                {{#if item.Created}}
+                  <span class="executive-ribbon__created">
+                    Created {{getDate item.Created "MM/DD/YYYY"}}
+                  </span>
+                {{/if}}
+
+
+              </div>
+            </div>
+
+
+            <!-- =========================
+                 SECTION 4 — ACTIONS
+            ========================== -->
+            <div class="executive-ribbon__actions">
+
+
+              {{#if item.PreviewUrl}}
+                <span class="executive-ribbon__action">
+                  <pnp-filepreview
+                    data-preview-url="{{item.PreviewUrl}}"
+                    data-item-url="{{item.Path}}"
+                    data-theme-variant="{{JSONstringify @root.theme}}">
+                  </pnp-filepreview>
+                  <span>Preview</span>
+                </span>
+              {{/if}}
+
+
+              <a
+                class="executive-ribbon__open"
+                href="{{item.Path}}"
+                title="Open {{item.Title}}">
+                Open
+              </a>
+
+
+            </div>
+          </article>
+        {{/each}}
+
+
+      </div>
+
+
+      <!-- =========================
+           SECTION 5 — PAGINATION
+      ========================== -->
+      {{#if @root.properties.showPagination}}
+        <pnp-pagination
+          data-total-items="{{@root.data.totalItemsCount}}"
+          data-hide-first-last-pages="{{@root.properties.hideFirstLastPages}}"
+          data-hide-disabled="{{@root.properties.hideDisabled}}"
+          data-hide-navigation="{{@root.properties.hideNavigation}}"
+          data-range="{{@root.properties.pagingRange}}"
+          data-items-count-per-page="{{@root.properties.itemsCountPerPage}}"
+          data-current-page-number="{{@root.paging.currentPageNumber}}">
+        </pnp-pagination>
+      {{/if}}
+
+
+    {{else}}
+      <div class="executive-ribbon__empty">
+        No Executive AI Playbook results were found.
+      </div>
+    {{/if}}
+
+
+  </div>
+</content>
+
+
+<!-- =========================================================
+  SLOT / PROPERTY CHECKLIST
+  Confirm these names in Selected Properties or slot mappings:
+
+
+  Title              -> Title
+  Path               -> list item Display Form URL
+  PreviewUrl         -> PreviewUrl
+  UsageNotes         -> SCUsageNotes
+  MissionCategory    -> SCMissionCategory
+  ResponseFormat     -> SCResponseFormat
+  Tags               -> Tags
+  Created            -> Created
+  Author             -> Author
+
+
+  TEST ORDER
+  1. Confirm ribbons render with Title and SCUsageNotes.
+  2. Click title and Open; both must open the list record.
+  3. Confirm neither action downloads a file.
+  4. Confirm Preview opens through pnp-filepreview.
+  5. Verify Mission, Response, Tags, and Created values.
+  6. Test at approximately 1200px and tablet width.
+========================================================= -->

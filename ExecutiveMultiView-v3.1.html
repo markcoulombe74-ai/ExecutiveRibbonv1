@@ -1,0 +1,487 @@
+<!-- ExecutiveMultiView-v3.1.html | PnP Modern Search v4.22.0 | Production multiview: Ribbon, Tiles, Compact, Spotlight --><content id="data-content"><style>.multi-root{--navy:#17365d;--blue:#0078d4;--deep:#005a9e;--cyan:#00a6a6;--violet:#6b5bd2;--muted:#5f6b7a;--line:#dbe5ef;--er2-navy:#17365d;--er2-blue:#0078d4;--er2-blue-deep:#005a9e;--er2-cyan:#00a6a6;--er2-violet:#6b5bd2;--er2-muted:#5f6b7a;--er2-line:#dbe5ef;color:#172033;font-family:"Segoe UI",Arial,sans-serif;width:100%;max-width:1200px;margin:0 auto}.multi-choice{position:absolute;width:1px;height:1px;opacity:0}.multi-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px;padding:10px 12px;background:linear-gradient(100deg,#eef6ff,#fff 60%,#f7f4ff);border:1px solid #d5e2ef;border-radius:12px}.multi-top .x-summary{margin:0;padding:0;background:none;border:0}.multi-switch{display:flex;gap:4px;padding:4px;background:#e9f1fa;border:1px solid #cfdeed;border-radius:10px}.multi-button{display:flex;align-items:center;gap:6px;padding:6px 11px;color:#4b6076;font-size:12.5px;font-weight:700;cursor:pointer;border-radius:7px}#multi-ribbon:checked~.multi-top .ribbon-button,#multi-tiles:checked~.multi-top .tiles-button{color:#fff;background:linear-gradient(135deg,var(--navy),var(--blue));box-shadow:0 4px 10px rgba(0,90,158,.2)}.multi-tiles{display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}#multi-tiles:checked~.multi-ribbons{display:none}#multi-tiles:checked~.multi-tiles{display:grid}.x-pager{display:flex;justify-content:center;margin:20px 0 4px;padding-top:15px;border-top:1px solid var(--line)}.x-no{padding:40px;text-align:center;border:1px dashed #aac4dc;border-radius:14px}@media(max-width:980px){.multi-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:620px){.multi-top{align-items:stretch;flex-direction:column}.multi-switch{align-self:flex-end}.multi-tiles{grid-template-columns:1fr}.x-card{min-height:0}}.multi-ribbons {
+      display: grid;
+      gap: 12px;
+    }
+
+
+    .er2-item {
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: stretch;
+      min-height: 132px;
+      padding: 18px 18px 18px 16px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 96% 8%, rgba(0,120,212,.10), transparent 25%),
+        linear-gradient(135deg, #ffffff 0%, #fbfdff 58%, #f5f9ff 100%);
+      border: 1px solid #cfdae7;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(23,54,93,.08), 0 12px 30px rgba(23,54,93,.05);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+
+    .er2-item::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      z-index: 2;
+      width: 5px;
+      background: linear-gradient(180deg, var(--er2-blue) 0%, var(--er2-cyan) 48%, var(--er2-violet) 100%);
+    }
+
+
+    .er2-item::after {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 5px;
+      z-index: 0;
+      height: 3px;
+      opacity: .72;
+      background: linear-gradient(90deg, var(--er2-blue), var(--er2-cyan) 44%, transparent 82%);
+    }
+
+
+    .er2-item:hover,
+    .er2-item:focus-within {
+      transform: translateY(-2px);
+      border-color: #9fc3e8;
+      box-shadow: 0 7px 18px rgba(23,54,93,.13), 0 18px 38px rgba(23,54,93,.08);
+    }
+
+
+    .er2-signal {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 2px;
+    }
+
+
+    .er2-ai {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: .7px;
+      background: linear-gradient(145deg, var(--er2-navy), var(--er2-blue) 58%, var(--er2-cyan));
+      border: 1px solid rgba(255,255,255,.65);
+      border-radius: 14px;
+      box-shadow: 0 6px 14px rgba(0,120,212,.22), inset 0 1px 0 rgba(255,255,255,.28);
+    }
+
+
+    .er2-ai::before,
+    .er2-ai::after {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: #b9fff2;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(185,255,242,.17), 0 0 10px rgba(185,255,242,.9);
+    }
+
+
+    .er2-ai::before { top: 7px; right: 8px; }
+    .er2-ai::after { bottom: 8px; left: 7px; width: 3px; height: 3px; }
+
+
+    .er2-spark {
+      margin-top: 8px;
+      color: var(--er2-blue-deep);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+
+    .er2-main {
+      position: relative;
+      z-index: 1;
+      min-width: 0;
+    }
+
+
+    .er2-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin: 0 0 4px;
+      color: var(--er2-blue-deep);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.25px;
+      text-transform: uppercase;
+    }
+
+
+    .er2-eyebrow::before {
+      content: "";
+      width: 18px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--er2-blue), var(--er2-cyan));
+      border-radius: 2px;
+    }
+
+
+    .er2-title {
+      display: inline-block;
+      max-width: 100%;
+      margin: 0 0 9px;
+      overflow: hidden;
+      color: var(--er2-navy);
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.28;
+      text-decoration: none;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+
+    .er2-title:hover,
+    .er2-title:focus {
+      color: var(--er2-blue-deep);
+      text-decoration: underline;
+      text-decoration-color: var(--er2-cyan);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+
+
+    .er2-usage {
+      position: relative;
+      display: -webkit-box;
+      margin: 0 0 12px;
+      padding: 9px 12px 9px 14px;
+      overflow: hidden;
+      color: #26364b;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.45;
+      background: rgba(240,247,255,.82);
+      border: 1px solid #d9e8f7;
+      border-left: 3px solid var(--er2-cyan);
+      border-radius: 0 7px 7px 0;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+
+    .er2-usage--empty {
+      color: var(--er2-muted);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+
+    .er2-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px;
+    }
+
+
+    .er2-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 2px 9px;
+      color: #16456f;
+      font-size: 11.5px;
+      font-weight: 700;
+      line-height: 18px;
+      background: linear-gradient(180deg, #f8fbff, #eaf4ff);
+      border: 1px solid #c9dff4;
+      border-radius: 999px;
+      box-shadow: inset 0 1px 0 #ffffff;
+    }
+
+
+    .er2-chip--response {
+      color: #31569b;
+      background: linear-gradient(180deg, #fbfaff, #f0edff);
+      border-color: #d7d0f5;
+    }
+
+
+    .er2-chip-label {
+      margin-right: 5px;
+      color: var(--er2-muted);
+      font-weight: 500;
+    }
+
+
+    .er2-created {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 24px;
+      padding: 2px 8px;
+      color: var(--er2-muted);
+      font-size: 11.5px;
+      white-space: nowrap;
+    }
+
+
+    .er2-actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex: 0 0 auto;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+      gap: 8px;
+      min-width: 96px;
+      padding-left: 14px;
+      border-left: 1px solid rgba(188,205,222,.72);
+    }
+
+
+    .er2-preview {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-height: 32px;
+      padding: 4px 8px;
+      color: var(--er2-blue-deep);
+      font-size: 12.5px;
+      font-weight: 700;
+      background: rgba(255,255,255,.72);
+      border: 1px solid #cbdcec;
+      border-radius: 7px;
+    }
+
+
+    .er2-preview:hover,
+    .er2-preview:focus-within {
+      background: #edf6ff;
+      border-color: #9fc4e8;
+    }
+
+
+    .er2-open {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 36px;
+      padding: 6px 13px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      text-decoration: none;
+      background: linear-gradient(135deg, var(--er2-navy), var(--er2-blue));
+      border: 1px solid var(--er2-blue-deep);
+      border-radius: 8px;
+      box-shadow: 0 5px 12px rgba(0,90,158,.20), inset 0 1px 0 rgba(255,255,255,.18);
+      transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+    }
+
+
+    .er2-open:hover,
+    .er2-open:focus {
+      color: #ffffff;
+      text-decoration: none;
+      transform: translateY(-1px);
+      background: linear-gradient(135deg, #102b4c, var(--er2-blue-deep));
+      box-shadow: 0 7px 16px rgba(0,90,158,.28), inset 0 1px 0 rgba(255,255,255,.2);
+    }
+
+
+    .er2-title:focus-visible,
+    .er2-open:focus-visible,
+    .er2-preview:focus-within {
+      outline: 2px solid #005fcc;
+      outline-offset: 2px;
+    }
+
+
+    .er2-pagination {
+      display: flex;
+      justify-content: center;
+      margin: 18px 0 4px;
+      padding-top: 14px;
+      border-top: 1px solid var(--er2-line);
+    }
+
+
+    .er2-empty {
+      padding: 36px 24px;
+      color: var(--er2-muted);
+      text-align: center;
+      background: linear-gradient(135deg, #f8fbff, #ffffff);
+      border: 1px dashed #aac4dc;
+      border-radius: 12px;
+    }
+
+
+    
+.x-card{position:relative;display:flex;min-width:0;min-height:330px;overflow:hidden;flex-direction:column;background:radial-gradient(circle at 92% 5%,rgba(107,91,210,.13),transparent 25%),linear-gradient(145deg,#fff,#fbfdff 58%,#f3f8ff);border:1px solid #c9d9e9;border-radius:16px;box-shadow:0 5px 14px rgba(23,54,93,.1),0 18px 34px rgba(23,54,93,.07);transition:transform 180ms ease,box-shadow 180ms ease}
+.x-card:before{content:"";position:absolute;inset:0 0 auto;height:5px;background:linear-gradient(90deg,var(--blue),var(--cyan) 48%,var(--violet))}
+.x-card:hover,.x-card:focus-within{transform:translateY(-4px);box-shadow:0 10px 24px rgba(23,54,93,.16),0 24px 44px rgba(23,54,93,.1)}
+.x-hero{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 12px}.x-ai{position:relative;display:grid;place-items:center;width:54px;height:54px;color:#fff;font-size:17px;font-weight:800;letter-spacing:.8px;background:linear-gradient(145deg,var(--navy),var(--blue) 58%,var(--cyan));border-radius:16px;box-shadow:0 7px 16px rgba(0,120,212,.25)}.x-ai:after{content:"";position:absolute;top:8px;right:8px;width:6px;height:6px;background:#c9fff4;border-radius:50%;box-shadow:0 0 12px #c9fff4}.x-type{padding:5px 9px;color:var(--deep);font-size:10px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;background:#eff7ff;border:1px solid #c8ddf1;border-radius:999px}
+.x-body{display:flex;flex:1;min-width:0;flex-direction:column;padding:0 20px 16px}.x-eye{margin:0 0 5px;color:var(--deep);font-size:10px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}.x-title{display:-webkit-box;margin:0 0 12px;overflow:hidden;color:var(--navy);font-size:19px;font-weight:750;line-height:1.3;text-decoration:none;-webkit-box-orient:vertical;-webkit-line-clamp:2}.x-title:hover{text-decoration:underline;text-decoration-color:var(--cyan);text-decoration-thickness:2px;text-underline-offset:3px}
+.x-usage{display:-webkit-box;min-height:66px;margin:0 0 14px;padding:11px 12px;overflow:hidden;color:#26364b;font-size:13.5px;font-weight:500;line-height:1.48;background:#f0f7ff;border:1px solid #d9e8f7;border-left:3px solid var(--cyan);border-radius:0 8px 8px 0;-webkit-box-orient:vertical;-webkit-line-clamp:3}.x-empty{color:var(--muted);font-style:italic}
+.x-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto}.x-chip{display:inline-flex;align-items:center;min-height:24px;padding:2px 9px;color:#16456f;font-size:11px;font-weight:700;background:linear-gradient(#f8fbff,#eaf4ff);border:1px solid #c9dff4;border-radius:999px}.x-response{color:#31569b;background:linear-gradient(#fbfaff,#f0edff);border-color:#d7d0f5}.x-label{margin-right:4px;color:var(--muted);font-weight:500}.x-created{display:flex;align-items:center;gap:5px;width:100%;color:var(--muted);font-size:11.5px}
+.x-actions{display:grid;grid-template-columns:1fr 1.15fr;gap:8px;padding:13px 20px 18px;background:#f7fafe;border-top:1px solid var(--line)}.x-preview,.x-open{display:flex;align-items:center;justify-content:center;gap:6px;min-height:36px;padding:4px 9px;font-size:12.5px;font-weight:700;border-radius:8px}.x-preview{color:var(--deep);background:#fff;border:1px solid #cbdcec}.x-open{color:#fff;text-decoration:none;background:linear-gradient(135deg,var(--navy),var(--blue));border:1px solid var(--deep);box-shadow:0 5px 12px rgba(0,90,158,.2)}
+/* Multi View v1: restore Ribbon v2 tokens and enforce list-control contrast */
+.multi-button{border:1px solid transparent;transition:color 140ms ease,background 140ms ease,border-color 140ms ease,box-shadow 140ms ease}
+.multi-button pnp-icon{color:currentColor}
+#multi-ribbon:not(:checked)~.multi-top .ribbon-button,
+#multi-tiles:not(:checked)~.multi-top .tiles-button{color:#29445f;background:#fff;border-color:#b7cce0}
+#multi-ribbon:not(:checked)~.multi-top .ribbon-button:hover,
+#multi-tiles:not(:checked)~.multi-top .tiles-button:hover{color:#003f73;background:#e2f1ff;border-color:#5b9bd5}
+.multi-button:focus-visible{outline:3px solid rgba(0,95,204,.32);outline-offset:2px}
+.er2-ai{color:#fff!important;background:linear-gradient(145deg,#17365d 0%,#0078d4 58%,#007f86 100%)!important;border-color:#fff!important}
+.er2-spark,.er2-eyebrow{color:#004f8c!important}
+.er2-created pnp-icon{color:#005a9e}
+.er2-preview{color:#004b84!important;background:#eaf4ff!important;border:1px solid #78aedd!important;box-shadow:inset 0 1px 0 #fff}
+.er2-preview pnp-icon{color:#004b84!important}
+.er2-preview:hover,.er2-preview:focus-within{color:#fff!important;background:#005a9e!important;border-color:#004578!important}
+.er2-preview:hover pnp-icon,.er2-preview:focus-within pnp-icon{color:#fff!important}
+.er2-open{color:#fff!important;background:linear-gradient(135deg,#17365d,#0078d4)!important;border-color:#004f8c!important}
+.er2-open pnp-icon{color:#fff!important}
+.er2-open:hover,.er2-open:focus{color:#fff!important;background:linear-gradient(135deg,#0d2949,#005a9e)!important}
+
+
+/* Executive MultiView additions: Compact + Spotlight */
+.multi-compact,.multi-spotlight{display:none}.multi-compact{border:1px solid #cbdbea;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 8px 24px rgba(23,54,93,.07)}.mc-row{display:grid;grid-template-columns:44px minmax(180px,1.1fr) minmax(240px,1.6fr) auto;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid #e2eaf2;transition:background 140ms ease}.mc-row:last-child{border-bottom:0}.mc-row:hover,.mc-row:focus-within{background:linear-gradient(90deg,#f2f8ff,#fff 68%,#faf8ff)}.mc-ai{display:grid;place-items:center;width:34px;height:34px;color:#fff;font-size:11px;font-weight:800;background:linear-gradient(145deg,var(--navy),var(--blue) 58%,var(--cyan));border-radius:10px;box-shadow:0 4px 9px rgba(0,120,212,.2)}.mc-main{min-width:0}.mc-title{display:block;overflow:hidden;color:var(--navy);font-size:14px;font-weight:750;text-overflow:ellipsis;white-space:nowrap;text-decoration:none}.mc-sub{margin-top:3px;color:var(--muted);font-size:10.5px}.mc-usage{display:-webkit-box;overflow:hidden;color:#35465b;font-size:12.5px;line-height:1.4;-webkit-box-orient:vertical;-webkit-line-clamp:2}.mc-meta{display:flex;align-items:center;justify-content:flex-end;gap:6px}.mc-open{display:grid;place-items:center;width:32px;height:32px;color:#fff;background:linear-gradient(135deg,var(--navy),var(--blue));border:1px solid var(--deep);border-radius:8px;text-decoration:none}.multi-spotlight{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.ms-card{position:relative;min-height:260px;padding:24px;overflow:hidden;background:radial-gradient(circle at 100% 0,rgba(0,166,166,.16),transparent 30%),linear-gradient(140deg,#102c4d 0%,#174f7f 52%,#087b86 100%);border:1px solid rgba(255,255,255,.25);border-radius:18px;box-shadow:0 12px 30px rgba(23,54,93,.22);color:#fff}.ms-card:nth-child(3n+2){background:radial-gradient(circle at 100% 0,rgba(107,91,210,.28),transparent 32%),linear-gradient(140deg,#25245b,#315da1 55%,#5c54aa)}.ms-card:before{content:"AI";position:absolute;right:-8px;bottom:-30px;color:rgba(255,255,255,.07);font-size:130px;font-weight:900;line-height:1}.ms-kicker{position:relative;display:flex;align-items:center;gap:8px;margin-bottom:12px;color:#c9fff4;font-size:10px;font-weight:800;letter-spacing:1.35px;text-transform:uppercase}.ms-title{position:relative;display:-webkit-box;margin:0 0 14px;overflow:hidden;color:#fff;font-size:22px;font-weight:750;line-height:1.25;text-decoration:none;-webkit-box-orient:vertical;-webkit-line-clamp:2}.ms-usage{position:relative;display:-webkit-box;min-height:70px;margin-bottom:18px;overflow:hidden;color:#eef8ff;font-size:14px;line-height:1.55;-webkit-box-orient:vertical;-webkit-line-clamp:3}.ms-foot{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:7px}.ms-pill{padding:4px 9px;color:#fff;font-size:11px;font-weight:700;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.27);border-radius:999px}.ms-open{margin-left:auto;display:inline-flex;align-items:center;gap:6px;padding:8px 12px;color:#17365d;font-size:12px;font-weight:800;background:#fff;border-radius:8px;text-decoration:none;box-shadow:0 5px 14px rgba(0,0,0,.16)}#multi-ribbon:checked~.multi-top .ribbon-button,#multi-tiles:checked~.multi-top .tiles-button,#multi-compact:checked~.multi-top .compact-button,#multi-spotlight:checked~.multi-top .spotlight-button{color:#fff;background:linear-gradient(135deg,var(--navy),var(--blue));border-color:transparent;box-shadow:0 4px 10px rgba(0,90,158,.2)}#multi-compact:checked~.multi-ribbons,#multi-compact:checked~.multi-tiles,#multi-spotlight:checked~.multi-ribbons,#multi-spotlight:checked~.multi-tiles{display:none}#multi-compact:checked~.multi-compact{display:block}#multi-spotlight:checked~.multi-spotlight{display:grid}@media(max-width:800px){.multi-switch{flex-wrap:wrap}.multi-spotlight{grid-template-columns:1fr}.mc-row{grid-template-columns:38px minmax(0,1fr) auto}.mc-usage{display:none}}@media(max-width:520px){.multi-button{flex:1;justify-content:center}.multi-button span{display:none}.mc-meta .x-chip{display:none}.ms-card{padding:20px;min-height:240px}}
+
+/* Executive MultiView v3.1: restrained production multiview with FeaturedPrompt + SharePoint ratings */
+.mv-signal{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 8px}
+.mv-launch,.mv-rating,.mv-awaiting{display:inline-flex;align-items:center;gap:5px;min-height:24px;padding:2px 9px;font-size:11px;font-weight:800;border-radius:999px}
+.mv-launch{color:#5b3900;background:linear-gradient(180deg,#fff8d8,#ffe89a);border:1px solid #d6a900;box-shadow:0 2px 7px rgba(167,117,0,.14)}
+.mv-rating{color:#5a4300;background:#fffaf0;border:1px solid #e1c76b}
+.mv-rating pnp-icon,.mv-launch pnp-icon{color:#a86f00}
+.mv-awaiting{color:#526579;background:#f3f6f9;border:1px solid #d4dee8;font-weight:650}
+.x-hero-tags{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.x-rating{color:#6a4c00;font-size:11px;font-weight:800}
+.mc-signals{display:flex;align-items:center;gap:5px;margin-top:4px}
+.mc-launch{color:#795500;font-size:10px;font-weight:850;text-transform:uppercase;letter-spacing:.5px}
+.mc-rating{color:#657487;font-size:10.5px}
+.ms-card{order:1}
+.ms-card.ms-featured{order:-1;background:radial-gradient(circle at 96% 5%,rgba(255,218,92,.25),transparent 29%),linear-gradient(140deg,#15304f 0%,#185d86 52%,#087b78 100%);border:2px solid #f0cb55;box-shadow:0 14px 34px rgba(23,54,93,.27),0 0 0 3px rgba(240,203,85,.12)}
+.ms-card.ms-featured:after{content:"LAUNCH PICK";position:absolute;top:18px;right:-37px;width:150px;padding:5px 0;color:#533900;font-size:9px;font-weight:900;letter-spacing:1.1px;text-align:center;background:#ffe17a;transform:rotate(38deg);box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.ms-card.ms-featured .ms-kicker{color:#fff1a9}
+.ms-rating{position:relative;display:inline-flex;align-items:center;gap:5px;padding:5px 9px;color:#fff5bd;font-size:11px;font-weight:800;background:rgba(0,0,0,.15);border:1px solid rgba(255,235,147,.38);border-radius:999px}
+.ms-awaiting{position:relative;color:#d9e8f5;font-size:11px}
+@media(max-width:620px){.mv-awaiting{display:none}.ms-card.ms-featured:after{display:none}}
+/* v3.1 rating placement: secondary signals live in quiet far-right utility rails */
+.er2-actions{min-width:132px;padding-top:38px}
+.er2-rating-rail{position:absolute;top:9px;right:0;left:14px;justify-content:flex-end;margin:0;gap:4px}
+.er2-rating-rail .mv-launch,.er2-rating-rail .mv-rating,.er2-rating-rail .mv-awaiting{min-height:20px;padding:1px 6px;font-size:9.5px;white-space:nowrap}
+.mc-row{position:relative;padding-top:26px}
+.mc-rating-rail{position:absolute;top:7px;right:14px;display:flex;align-items:center;justify-content:flex-end;gap:7px;max-width:52%;white-space:nowrap}
+.mc-rating-rail .mc-launch,.mc-rating-rail .mc-rating{font-size:9.5px}
+.ms-rating-rail{position:relative;display:flex;justify-content:flex-end;min-height:27px;margin:-7px 0 9px}
+.ms-rating-rail .ms-rating{padding:4px 8px;font-size:10.5px}
+.ms-rating-rail .ms-awaiting{align-self:center}
+@media(max-width:800px){.mc-row{padding-top:11px}.mc-rating-rail{position:static;grid-column:2/4;grid-row:2;max-width:none;margin-top:-6px}.mc-meta{grid-column:3;grid-row:1}}
+@media(max-width:620px){.er2-item{grid-template-columns:52px minmax(0,1fr)}.er2-actions{grid-column:2;min-width:0;padding:38px 0 0;border-left:0;flex-direction:row}.er2-rating-rail{left:0}.er2-preview,.er2-open{flex:1}.ms-rating-rail{justify-content:flex-start}}
+
+</style><div class="multi-root">{{#if @root.properties.showSelectedFilters}}<pnp-selectedfilters data-filters="{{JSONstringify filters.selectedFilters 2}}" data-filters-configuration="{{JSONstringify filters.filtersConfiguration 2}}" data-instance-id="{{filters.instanceId}}" data-operator="{{filters.filterOperator}}" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-selectedfilters>{{/if}}<input class="multi-choice" type="radio" name="multi-view" id="multi-ribbon" checked><input class="multi-choice" type="radio" name="multi-view" id="multi-tiles"><input class="multi-choice" type="radio" name="multi-view" id="multi-compact"><input class="multi-choice" type="radio" name="multi-view" id="multi-spotlight"><div class="multi-top"><div class="x-summary">{{#if @root.properties.showResultsCount}}<span>{{getCountMessage @root.data.totalItemsCount @root.inputQueryText}}</span>{{/if}}{{#if @root.properties.showSort}}<pnp-sortfield data-fields="{{JSONstringify @root.properties.sorting.fields}}" data-selected-field="{{sort.selectedSortFieldName}}" data-selected-direction="{{sort.selectedSortDirection}}" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-sortfield>{{/if}}</div><div class="multi-switch" role="group" aria-label="Results view"><label class="multi-button ribbon-button" for="multi-ribbon"><pnp-icon data-name="BulletedList"></pnp-icon><span>Ribbon</span></label><label class="multi-button tiles-button" for="multi-tiles"><pnp-icon data-name="GridViewMedium"></pnp-icon><span>Tiles</span></label><label class="multi-button compact-button" for="multi-compact"><pnp-icon data-name="AlignLeft"></pnp-icon><span>Compact</span></label><label class="multi-button spotlight-button" for="multi-spotlight"><pnp-icon data-name="FavoriteStar"></pnp-icon><span>Spotlight</span></label></div></div>{{#if data.items}}<div class="multi-ribbons">
+        {{#each data.items as |item|}}
+          <article class="er2-item">
+            <div class="er2-signal" aria-hidden="true">
+              <div class="er2-ai">AI</div>
+              <span class="er2-spark">Prompt</span>
+            </div>
+
+
+            <div class="er2-main">
+              <div class="er2-eyebrow">Executive AI Playbook</div>
+              <a
+                class="er2-title"
+                href="{{item.Path}}"
+                target="_blank"
+                data-interception="off"
+                rel="noopener noreferrer"
+                title="Open {{item.Title}} in a new tab">
+                {{item.Title}}
+              </a>
+
+
+              {{#if item.SCUsageNotes}}
+                <div class="er2-usage">
+                  {{{item.SCUsageNotes}}}
+                </div>
+              {{else}}
+                <div class="er2-usage er2-usage--empty">
+                  No usage notes provided.
+                </div>
+              {{/if}}
+
+
+              <div class="er2-meta">
+                {{#if item.SCMissionCategory}}
+                  <span class="er2-chip">
+                    <span class="er2-chip-label">Mission</span>
+                    {{item.SCMissionCategory}}
+                  </span>
+                {{/if}}
+
+
+                {{#if item.SCResponseFormat}}
+                  <span class="er2-chip er2-chip--response">
+                    <span class="er2-chip-label">Response</span>
+                    {{item.SCResponseFormat}}
+                  </span>
+                {{/if}}
+
+
+                {{#if item.Created}}
+                  <span class="er2-created">
+                    <pnp-icon data-name="Calendar"></pnp-icon>
+                    Created {{getDate item.Created "MM/DD/YYYY"}}
+                  </span>
+                {{/if}}
+              </div>
+            </div>
+
+
+            <div class="er2-actions">
+              <div class="mv-signal er2-rating-rail">{{#if item.FeaturedPrompt}}<span class="mv-launch"><pnp-icon data-name="FavoriteStarFill"></pnp-icon>Launch Pick</span>{{/if}}{{#if item.AverageRating}}<span class="mv-rating"><pnp-icon data-name="FavoriteStarFill"></pnp-icon>{{item.AverageRating}} / 5 · {{item.RatingCount}} ratings</span>{{else}}<span class="mv-awaiting">Awaiting community ratings</span>{{/if}}</div>
+              {{#if item.PreviewUrl}}
+                <span class="er2-preview">
+                  <pnp-filepreview
+                    data-preview-url="{{item.PreviewUrl}}"
+                    data-item-url="{{item.Path}}"
+                    data-theme-variant="{{JSONstringify @root.theme}}">
+                  </pnp-filepreview>
+                  <span>Preview</span>
+                </span>
+              {{/if}}
+
+
+              <a
+                class="er2-open"
+                href="{{item.Path}}"
+                target="_blank"
+                data-interception="off"
+                rel="noopener noreferrer"
+                title="Open {{item.Title}} in a new tab">
+                <span>Open</span>
+                <pnp-icon data-name="OpenInNewWindow"></pnp-icon>
+              </a>
+            </div>
+          </article>
+        {{/each}}
+      </div><div class="multi-tiles">{{#each data.items as |item|}}<article class="x-card"><div class="x-hero"><div class="x-ai" aria-hidden="true">AI</div><div class="x-hero-tags">{{#if item.FeaturedPrompt}}<span class="mv-launch"><pnp-icon data-name="FavoriteStarFill"></pnp-icon>Launch Pick</span>{{else}}<span class="x-type">Prompt asset</span>{{/if}}{{#if item.AverageRating}}<span class="x-rating">★ {{item.AverageRating}} / 5 · {{item.RatingCount}} ratings</span>{{/if}}</div></div><div class="x-body"><div class="x-eye">Executive AI Playbook</div><a class="x-title" href="{{item.Path}}" target="_blank" data-interception="off" rel="noopener noreferrer">{{item.Title}}</a>{{#if item.SCUsageNotes}}<div class="x-usage">{{{item.SCUsageNotes}}}</div>{{else}}<div class="x-usage x-empty">No usage notes provided.</div>{{/if}}<div class="x-meta">{{#if item.SCMissionCategory}}<span class="x-chip"><span class="x-label">Mission</span>{{item.SCMissionCategory}}</span>{{/if}}{{#if item.SCResponseFormat}}<span class="x-chip x-response"><span class="x-label">Response</span>{{item.SCResponseFormat}}</span>{{/if}}{{#if item.Created}}<span class="x-created"><pnp-icon data-name="Calendar"></pnp-icon>Created {{getDate item.Created "MM/DD/YYYY"}}</span>{{/if}}</div></div><div class="x-actions">{{#if item.PreviewUrl}}<span class="x-preview"><pnp-filepreview data-preview-url="{{item.PreviewUrl}}" data-item-url="{{item.Path}}" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-filepreview>Preview</span>{{else}}<span></span>{{/if}}<a class="x-open" href="{{item.Path}}" target="_blank" data-interception="off" rel="noopener noreferrer">Open<pnp-icon data-name="OpenInNewWindow"></pnp-icon></a></div></article>{{/each}}</div><div class="multi-compact">{{#each data.items as |item|}}<article class="mc-row"><div class="mc-ai" aria-hidden="true">AI</div><div class="mc-main"><a class="mc-title" href="{{item.Path}}" target="_blank" data-interception="off" rel="noopener noreferrer">{{item.Title}}</a><div class="mc-sub">{{#if item.SCMissionCategory}}{{item.SCMissionCategory}}{{else}}Executive AI Playbook{{/if}}</div></div><div class="mc-usage">{{#if item.SCUsageNotes}}{{{item.SCUsageNotes}}}{{else}}No usage notes provided.{{/if}}</div><div class="mc-meta"><div class="mc-rating-rail">{{#if item.FeaturedPrompt}}<span class="mc-launch">★ Launch Pick</span>{{/if}}{{#if item.AverageRating}}<span class="mc-rating">{{item.AverageRating}} / 5 · {{item.RatingCount}} ratings</span>{{/if}}</div>{{#if item.SCResponseFormat}}<span class="x-chip x-response">{{item.SCResponseFormat}}</span>{{/if}}<a class="mc-open" href="{{item.Path}}" target="_blank" data-interception="off" rel="noopener noreferrer" aria-label="Open {{item.Title}} in a new tab"><pnp-icon data-name="OpenInNewWindow"></pnp-icon></a></div></article>{{/each}}</div><div class="multi-spotlight">{{#each data.items as |item|}}<article class="ms-card{{#if item.FeaturedPrompt}} ms-featured{{/if}}"><div class="ms-kicker"><pnp-icon data-name="{{#if item.FeaturedPrompt}}FavoriteStarFill{{else}}Sparkle{{/if}}"></pnp-icon>{{#if item.FeaturedPrompt}}Featured Prompt · Launch Pick{{else}}Community Discovery{{/if}}</div><a class="ms-title" href="{{item.Path}}" target="_blank" data-interception="off" rel="noopener noreferrer">{{item.Title}}</a><div class="ms-usage">{{#if item.SCUsageNotes}}{{{item.SCUsageNotes}}}{{else}}No usage notes provided.{{/if}}</div><div class="ms-rating-rail">{{#if item.AverageRating}}<span class="ms-rating"><pnp-icon data-name="FavoriteStarFill"></pnp-icon>{{item.AverageRating}} / 5 · {{item.RatingCount}} ratings</span>{{else}}<span class="ms-awaiting">Awaiting community ratings</span>{{/if}}</div><div class="ms-foot">{{#if item.SCMissionCategory}}<span class="ms-pill">{{item.SCMissionCategory}}</span>{{/if}}{{#if item.SCResponseFormat}}<span class="ms-pill">{{item.SCResponseFormat}}</span>{{/if}}{{#if item.Created}}<span class="ms-pill">{{getDate item.Created "MM/DD/YYYY"}}</span>{{/if}}<a class="ms-open" href="{{item.Path}}" target="_blank" data-interception="off" rel="noopener noreferrer">Open<pnp-icon data-name="OpenInNewWindow"></pnp-icon></a></div></article>{{/each}}</div>{{#if @root.properties.paging.showPaging}}<div class="x-pager"><pnp-pagination data-total-items="{{@root.data.totalItemsCount}}" data-hide-first-last-pages="{{@root.properties.paging.hideFirstLastPages}}" data-hide-disabled="{{@root.properties.paging.hideDisabled}}" data-hide-navigation="{{@root.properties.paging.hideNavigation}}" data-range="{{@root.properties.paging.pagingRange}}" data-items-count-per-page="{{@root.properties.paging.itemsCountPerPage}}" data-current-page-number="{{@root.paging.currentPageNumber}}"></pnp-pagination></div>{{/if}}{{else}}<div class="x-no">No Executive AI Playbook results were found.</div>{{/if}}</div></content><!-- V3.1 intentionally excludes Scan/Details, Quick Look, Prompt Body, and Copilot Platform. Required Selected Properties / slots: FeaturedPrompt, AverageRating, RatingCount. Featured items move ahead only within the current result page. Multi-view choice resets after a page rerender. Path must be the list item Display Form URL. -->

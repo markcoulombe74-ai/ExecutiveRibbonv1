@@ -1,0 +1,161 @@
+<!-- ExecutiveMultiView-v2-Expandable.html | target: PnP Modern Search v4.22.0
+SETUP: Add a custom layout slot named PromptBody and map it to the retrievable managed property for the source Prompt Body column. Include that property in Selected Properties. Verify the full, untruncated value in Debug before using this template. No managed property name is assumed.
+PromptBody must contain plain text. Double braces intentionally escape literal markup. Rich HTML source needs an explicit conversion/rendering strategy before rollout.
+Native details/summary expansion: no script or inline onclick. Manual copying only; no simulated Copy button. One-click clipboard requires a deployed SPFx/PnP custom web component.
+Preserves supplied data-content wrapper, item aliases, four CSS views, count, filters, sort, previews and pagination. One instance per page. View choices and expanded state reset on search/paging rerender.
+Validate in the installed tenant: sanitization may vary by build. Test native details/summary and radio controls after save/publish.
+-->
+<content id="data-content">
+<style>
+.multi-root{--navy:#17365d;--blue:#0078d4;--cyan:#00a6a6;--violet:#6b5bd2;--line:#dbe5ef;color:#172033;font-family:"Segoe UI",Arial,sans-serif;max-width:1200px;margin:auto}
+.multi-choice{position:absolute;width:1px;height:1px;opacity:0}
+.multi-top{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:12px;margin-bottom:14px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(100deg,#eef6ff,#fff 60%,#f7f4ff)}
+.multi-switch{display:flex;flex-wrap:wrap;gap:5px}.multi-button{cursor:pointer;padding:8px 12px;border:1px solid #b7cce0;border-radius:8px;color:#29445f;background:#fff;font-weight:700;font-size:13px}
+.multi-ribbons{display:grid;gap:12px}.multi-tiles,.multi-compact,.multi-spotlight{display:none}
+.play-card{position:relative;min-width:0;overflow:hidden;border:1px solid #cfdae7;border-radius:12px;background:radial-gradient(circle at 96% 8%,rgba(0,120,212,.1),transparent 25%),linear-gradient(135deg,#fff,#f5f9ff);box-shadow:0 4px 16px rgba(23,54,93,.09)}
+.play-card:before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:linear-gradient(var(--blue),var(--cyan),var(--violet))}
+.play-head{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:16px;padding:18px}.play-ai{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:linear-gradient(145deg,var(--navy),var(--blue),#007f86);color:#fff;font-size:17px;font-weight:800;box-shadow:0 6px 14px #0078d433}
+.play-signal{color:#005a9e;font-size:9px;font-weight:800;letter-spacing:1px;text-align:center}.play-signal span{display:block;margin-top:8px}.play-eye{color:#005a9e;font-size:10px;font-weight:800;letter-spacing:1.25px;text-transform:uppercase;margin-bottom:5px}.play-title{color:var(--navy);font-size:19px;font-weight:700;margin:0 0 10px;line-height:1.3;overflow-wrap:anywhere}
+.play-usage{padding:9px 12px;margin-bottom:12px;border:1px solid #d9e8f7;border-left:3px solid var(--cyan);border-radius:0 7px 7px 0;background:#f0f7ff;color:#26364b;font-size:14px;line-height:1.45;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.play-meta{display:flex;flex-wrap:wrap;gap:7px;align-items:center}.play-chip{padding:4px 9px;border:1px solid #c9dff4;border-radius:999px;color:#16456f;background:#eaf4ff;font-size:11.5px;font-weight:700}.play-response{background:#f0edff;border-color:#d7d0f5;color:#31569b}.play-date{font-size:11.5px;color:#5f6b7a}.play-label{font-weight:400;margin-right:4px}.play-actions{display:flex;flex-direction:column;justify-content:center;gap:8px;padding-left:14px;border-left:1px solid var(--line)}
+.play-open,.play-preview{display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 12px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none}.play-open{color:#fff!important;background:linear-gradient(135deg,var(--navy),var(--blue))}.play-preview{color:#004b84;background:#eaf4ff;border:1px solid #78aedd}
+.play-details{border-top:1px solid var(--line)}.play-details>summary{cursor:pointer;list-style:none;padding:12px 18px;color:#004f8c;background:#edf6ff;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}.play-details>summary::-webkit-details-marker{display:none}.play-details>summary:before{content:"▸"}.play-details[open]>summary:before{content:"▾"}.play-collapse{display:none}.play-details[open] .play-expand{display:none}.play-details[open] .play-collapse{display:inline}.play-details>summary:hover{background:#deefff}.play-details>summary:focus-visible,.play-open:focus-visible{outline:3px solid #005fcc;outline-offset:-3px}
+.play-prompt-panel{padding:16px 18px;background:#fff;color:#172033}.play-hint{font-size:12px;color:#536277;margin:0 0 12px}.play-prompt{margin:0;padding:16px;border:1px solid #cbdbea;border-radius:8px;background:#f8fbff;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;user-select:text;font:14px/1.65 "Segoe UI",Arial,sans-serif}.play-missing{margin:0;color:#536277;font-size:13px}.x-pager{display:flex;justify-content:center;margin-top:20px;padding-top:15px;border-top:1px solid var(--line)}.x-no{padding:40px;text-align:center;border:1px dashed #aac4dc;border-radius:14px}
+.multi-tiles .play-head{grid-template-columns:1fr}.multi-tiles .play-signal{display:flex;align-items:center;gap:12px}.multi-tiles .play-actions{flex-direction:row;border:0;padding:0}.multi-tiles .play-card{display:flex;flex-direction:column}.multi-tiles .play-details{margin-top:auto}
+.multi-compact .play-head{grid-template-columns:44px minmax(0,1fr) auto;padding:12px}.multi-compact .play-ai{width:34px;height:34px;font-size:11px;border-radius:10px}.multi-compact .play-signal span,.multi-compact .play-eye,.multi-compact .play-date{display:none}.multi-compact .play-title{font-size:14px;margin-bottom:5px}.multi-compact .play-usage{font-size:12.5px;margin-bottom:6px;padding:6px 9px}.multi-compact .play-details>summary{padding:8px 14px}
+.multi-spotlight .play-card{background:linear-gradient(140deg,#102c4d,#174f7f 52%,#087b86);color:#fff}.multi-spotlight .play-head{grid-template-columns:1fr}.multi-spotlight .play-signal{display:none}.multi-spotlight .play-title{color:#fff;font-size:22px}.multi-spotlight .play-eye{color:#c9fff4}.multi-spotlight .play-usage{background:transparent;color:#eef8ff;border:0;padding:0}.multi-spotlight .play-date{color:#eef8ff}.multi-spotlight .play-actions{flex-direction:row;border:0;padding:0}.multi-spotlight .play-card{display:flex;flex-direction:column}.multi-spotlight .play-details{margin-top:auto}
+@media(max-width:800px){.multi-top{align-items:stretch;flex-direction:column}.play-head{grid-template-columns:48px minmax(0,1fr)}.play-actions{grid-column:2;flex-direction:row;padding:0;border:0}.multi-compact .play-head{grid-template-columns:38px minmax(0,1fr)}.play-title{font-size:17px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+#multi-ribbon:checked~.multi-top .ribbon-button{color:#fff;background:linear-gradient(135deg,var(--navy),var(--blue));border-color:var(--navy)}
+#multi-ribbon:checked~.multi-ribbons{display:grid;}
+#multi-tiles:checked~.multi-top .tiles-button{color:#fff;background:linear-gradient(135deg,var(--navy),var(--blue));border-color:var(--navy)}
+#multi-tiles:checked~.multi-ribbons{display:none}
+#multi-tiles:checked~.multi-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+#multi-compact:checked~.multi-top .compact-button{color:#fff;background:linear-gradient(135deg,var(--navy),var(--blue));border-color:var(--navy)}
+#multi-compact:checked~.multi-ribbons{display:none}
+#multi-compact:checked~.multi-compact{display:block;}
+#multi-spotlight:checked~.multi-top .spotlight-button{color:#fff;background:linear-gradient(135deg,var(--navy),var(--blue));border-color:var(--navy)}
+#multi-spotlight:checked~.multi-ribbons{display:none}
+#multi-spotlight:checked~.multi-spotlight{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;}
+@media(max-width:980px){#multi-tiles:checked~.multi-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:800px){#multi-spotlight:checked~.multi-spotlight{grid-template-columns:1fr}}@media(max-width:620px){#multi-tiles:checked~.multi-tiles{grid-template-columns:1fr}}
+</style><div class="multi-root">{{#if @root.properties.showSelectedFilters}}<pnp-selectedfilters data-filters="{{JSONstringify filters.selectedFilters 2}}" data-filters-configuration="{{JSONstringify filters.filtersConfiguration 2}}" data-instance-id="{{filters.instanceId}}" data-operator="{{filters.filterOperator}}" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-selectedfilters>{{/if}}<input class="multi-choice" type="radio" name="multi-view" id="multi-ribbon" aria-label="Ribbon view" checked><input class="multi-choice" type="radio" name="multi-view" id="multi-tiles" aria-label="Tiles view"><input class="multi-choice" type="radio" name="multi-view" id="multi-compact" aria-label="Compact view"><input class="multi-choice" type="radio" name="multi-view" id="multi-spotlight" aria-label="Spotlight view"><div class="multi-top"><div class="x-summary">{{#if @root.properties.showResultsCount}}<span>{{getCountMessage @root.data.totalItemsCount @root.inputQueryText}}</span>{{/if}}{{#if @root.properties.showSort}}<pnp-sortfield data-fields="{{JSONstringify @root.properties.sorting.fields}}" data-selected-field="{{sort.selectedSortFieldName}}" data-selected-direction="{{sort.selectedSortDirection}}" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-sortfield>{{/if}}</div><div class="multi-switch" role="group" aria-label="Results view"><label class="multi-button ribbon-button" for="multi-ribbon">Ribbon</label><label class="multi-button tiles-button" for="multi-tiles">Tiles</label><label class="multi-button compact-button" for="multi-compact">Compact</label><label class="multi-button spotlight-button" for="multi-spotlight">Spotlight</label></div></div>{{#if data.items}}<div class="multi-ribbons">{{#each data.items as |item|}}
+<article class="play-card">
+ <div class="play-head">
+  <div class="play-signal" aria-hidden="true"><div class="play-ai">AI</div><span>PROMPT</span></div>
+  <div class="play-main">
+   <div class="play-eye">Executive AI Playbook</div><h3 class="play-title">{{item.Title}}</h3>
+   <div class="play-usage">{{#if item.SCUsageNotes}}{{{item.SCUsageNotes}}}{{else}}No usage notes provided.{{/if}}</div>
+   <div class="play-meta">
+    {{#if item.SCMissionCategory}}<span class="play-chip"><span class="play-label">Mission</span>{{item.SCMissionCategory}}</span>{{/if}}
+    {{#if item.SCResponseFormat}}<span class="play-chip play-response"><span class="play-label">Response</span>{{item.SCResponseFormat}}</span>{{/if}}
+    {{#if item.Created}}<span class="play-date">Created {{getDate item.Created "MM/DD/YYYY"}}</span>{{/if}}
+   </div>
+  </div>
+  <div class="play-actions">
+   {{#if item.PreviewUrl}}<span class="play-preview"><pnp-filepreview data-preview-url="{{item.PreviewUrl}}" data-item-url="{{item.Path}}" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-filepreview>Preview</span>{{/if}}
+   {{#if item.Path}}<a class="play-open" href="{{item.Path}}" target="_blank" data-interception="off" rel="noopener noreferrer" aria-label="Open original: {{item.Title}}">Open original <pnp-icon data-name="OpenInNewWindow"></pnp-icon></a>{{/if}}
+  </div>
+ </div>
+ <details class="play-details">
+  <summary><span class="play-expand">View full prompt</span><span class="play-collapse">Hide full prompt</span><span>— {{item.Title}}</span></summary>
+  <div class="play-prompt-panel">
+   {{#if (slot item @root.slots.PromptBody)}}
+    <p class="play-hint">Select the prompt below and copy. On a phone, touch and hold the prompt to select text.</p>
+    <div class="play-prompt" role="region" aria-label="Full prompt: {{item.Title}}">{{slot item @root.slots.PromptBody}}</div>
+   {{else}}
+    <p class="play-missing">Full prompt is unavailable in these search results. Open the original record to review it.</p>
+   {{/if}}
+  </div>
+ </details>
+</article>
+{{/each}}</div><div class="multi-tiles">{{#each data.items as |item|}}
+<article class="play-card">
+ <div class="play-head">
+  <div class="play-signal" aria-hidden="true"><div class="play-ai">AI</div><span>PROMPT</span></div>
+  <div class="play-main">
+   <div class="play-eye">Executive AI Playbook</div><h3 class="play-title">{{item.Title}}</h3>
+   <div class="play-usage">{{#if item.SCUsageNotes}}{{{item.SCUsageNotes}}}{{else}}No usage notes provided.{{/if}}</div>
+   <div class="play-meta">
+    {{#if item.SCMissionCategory}}<span class="play-chip"><span class="play-label">Mission</span>{{item.SCMissionCategory}}</span>{{/if}}
+    {{#if item.SCResponseFormat}}<span class="play-chip play-response"><span class="play-label">Response</span>{{item.SCResponseFormat}}</span>{{/if}}
+    {{#if item.Created}}<span class="play-date">Created {{getDate item.Created "MM/DD/YYYY"}}</span>{{/if}}
+   </div>
+  </div>
+  <div class="play-actions">
+   {{#if item.PreviewUrl}}<span class="play-preview"><pnp-filepreview data-preview-url="{{item.PreviewUrl}}" data-item-url="{{item.Path}}" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-filepreview>Preview</span>{{/if}}
+   {{#if item.Path}}<a class="play-open" href="{{item.Path}}" target="_blank" data-interception="off" rel="noopener noreferrer" aria-label="Open original: {{item.Title}}">Open original <pnp-icon data-name="OpenInNewWindow"></pnp-icon></a>{{/if}}
+  </div>
+ </div>
+ <details class="play-details">
+  <summary><span class="play-expand">View full prompt</span><span class="play-collapse">Hide full prompt</span><span>— {{item.Title}}</span></summary>
+  <div class="play-prompt-panel">
+   {{#if (slot item @root.slots.PromptBody)}}
+    <p class="play-hint">Select the prompt below and copy. On a phone, touch and hold the prompt to select text.</p>
+    <div class="play-prompt" role="region" aria-label="Full prompt: {{item.Title}}">{{slot item @root.slots.PromptBody}}</div>
+   {{else}}
+    <p class="play-missing">Full prompt is unavailable in these search results. Open the original record to review it.</p>
+   {{/if}}
+  </div>
+ </details>
+</article>
+{{/each}}</div><div class="multi-compact">{{#each data.items as |item|}}
+<article class="play-card">
+ <div class="play-head">
+  <div class="play-signal" aria-hidden="true"><div class="play-ai">AI</div><span>PROMPT</span></div>
+  <div class="play-main">
+   <div class="play-eye">Executive AI Playbook</div><h3 class="play-title">{{item.Title}}</h3>
+   <div class="play-usage">{{#if item.SCUsageNotes}}{{{item.SCUsageNotes}}}{{else}}No usage notes provided.{{/if}}</div>
+   <div class="play-meta">
+    {{#if item.SCMissionCategory}}<span class="play-chip"><span class="play-label">Mission</span>{{item.SCMissionCategory}}</span>{{/if}}
+    {{#if item.SCResponseFormat}}<span class="play-chip play-response"><span class="play-label">Response</span>{{item.SCResponseFormat}}</span>{{/if}}
+    {{#if item.Created}}<span class="play-date">Created {{getDate item.Created "MM/DD/YYYY"}}</span>{{/if}}
+   </div>
+  </div>
+  <div class="play-actions">
+   {{#if item.PreviewUrl}}<span class="play-preview"><pnp-filepreview data-preview-url="{{item.PreviewUrl}}" data-item-url="{{item.Path}}" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-filepreview>Preview</span>{{/if}}
+   {{#if item.Path}}<a class="play-open" href="{{item.Path}}" target="_blank" data-interception="off" rel="noopener noreferrer" aria-label="Open original: {{item.Title}}">Open original <pnp-icon data-name="OpenInNewWindow"></pnp-icon></a>{{/if}}
+  </div>
+ </div>
+ <details class="play-details">
+  <summary><span class="play-expand">View full prompt</span><span class="play-collapse">Hide full prompt</span><span>— {{item.Title}}</span></summary>
+  <div class="play-prompt-panel">
+   {{#if (slot item @root.slots.PromptBody)}}
+    <p class="play-hint">Select the prompt below and copy. On a phone, touch and hold the prompt to select text.</p>
+    <div class="play-prompt" role="region" aria-label="Full prompt: {{item.Title}}">{{slot item @root.slots.PromptBody}}</div>
+   {{else}}
+    <p class="play-missing">Full prompt is unavailable in these search results. Open the original record to review it.</p>
+   {{/if}}
+  </div>
+ </details>
+</article>
+{{/each}}</div><div class="multi-spotlight">{{#each data.items as |item|}}
+<article class="play-card">
+ <div class="play-head">
+  <div class="play-signal" aria-hidden="true"><div class="play-ai">AI</div><span>PROMPT</span></div>
+  <div class="play-main">
+   <div class="play-eye">Executive AI Playbook</div><h3 class="play-title">{{item.Title}}</h3>
+   <div class="play-usage">{{#if item.SCUsageNotes}}{{{item.SCUsageNotes}}}{{else}}No usage notes provided.{{/if}}</div>
+   <div class="play-meta">
+    {{#if item.SCMissionCategory}}<span class="play-chip"><span class="play-label">Mission</span>{{item.SCMissionCategory}}</span>{{/if}}
+    {{#if item.SCResponseFormat}}<span class="play-chip play-response"><span class="play-label">Response</span>{{item.SCResponseFormat}}</span>{{/if}}
+    {{#if item.Created}}<span class="play-date">Created {{getDate item.Created "MM/DD/YYYY"}}</span>{{/if}}
+   </div>
+  </div>
+  <div class="play-actions">
+   {{#if item.PreviewUrl}}<span class="play-preview"><pnp-filepreview data-preview-url="{{item.PreviewUrl}}" data-item-url="{{item.Path}}" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-filepreview>Preview</span>{{/if}}
+   {{#if item.Path}}<a class="play-open" href="{{item.Path}}" target="_blank" data-interception="off" rel="noopener noreferrer" aria-label="Open original: {{item.Title}}">Open original <pnp-icon data-name="OpenInNewWindow"></pnp-icon></a>{{/if}}
+  </div>
+ </div>
+ <details class="play-details">
+  <summary><span class="play-expand">View full prompt</span><span class="play-collapse">Hide full prompt</span><span>— {{item.Title}}</span></summary>
+  <div class="play-prompt-panel">
+   {{#if (slot item @root.slots.PromptBody)}}
+    <p class="play-hint">Select the prompt below and copy. On a phone, touch and hold the prompt to select text.</p>
+    <div class="play-prompt" role="region" aria-label="Full prompt: {{item.Title}}">{{slot item @root.slots.PromptBody}}</div>
+   {{else}}
+    <p class="play-missing">Full prompt is unavailable in these search results. Open the original record to review it.</p>
+   {{/if}}
+  </div>
+ </details>
+</article>
+{{/each}}</div>{{#if @root.properties.paging.showPaging}}<div class="x-pager"><pnp-pagination data-total-items="{{@root.data.totalItemsCount}}" data-hide-first-last-pages="{{@root.properties.paging.hideFirstLastPages}}" data-hide-disabled="{{@root.properties.paging.hideDisabled}}" data-hide-navigation="{{@root.properties.paging.hideNavigation}}" data-range="{{@root.properties.paging.pagingRange}}" data-items-count-per-page="{{@root.properties.paging.itemsCountPerPage}}" data-current-page-number="{{@root.paging.currentPageNumber}}"></pnp-pagination></div>{{/if}}{{else}}<div class="x-no">No Executive AI Playbook results were found.</div>{{/if}}</div></content>
